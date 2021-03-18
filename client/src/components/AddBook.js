@@ -3,6 +3,11 @@ import { graphql } from '@apollo/client/react/hoc';
 import { getAuthorsQuery } from '../queries/queries';
 
 class AddBook extends Component {
+   state = {
+     name: "",
+     genre: "",
+     authorId: ""
+   };
 
   displayAuthors() {
     let data = this.props.data; // data is attached to props when we bind a GraphQL query to a component
@@ -17,22 +22,27 @@ class AddBook extends Component {
     }
   }
 
+  submitForm(e) {
+    e.preventDefault();
+    console.log(this.state); // binds context of this to the submitForm function
+  }
+
   render () {
     return (
-      <form id="add-book">
+      <form id="add-book" onSubmit={this.submitForm.bind(this)}>
         <div className="field">
           <label>Book name:</label>
-          <input type="text"/>
+          <input type="text" onChange={e => this.setState({ name: e.target.value })}/>
         </div>
 
         <div className="field">
           <label>Genre:</label>
-          <input type="text"/>
+          <input type="text" onChange={e => this.setState({ genre: e.target.value })}/>
         </div>
 
         <div className="field">
           <label>Author:</label>
-          <select>
+          <select onChange={e => this.setState({ authorId: e.target.value })}>
             <option>Select author</option>
             { this.displayAuthors() }
           </select>
