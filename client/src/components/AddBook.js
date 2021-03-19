@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql } from '@apollo/client/react/hoc';
-import { getAuthorsQuery, addBookMutation } from '../queries/queries';
+import { getBooksQuery, getAuthorsQuery, addBookMutation } from '../queries/queries';
 import * as compose from 'lodash.flowright';
 
 class AddBook extends Component {
@@ -30,7 +30,8 @@ class AddBook extends Component {
         name: this.state.name,
         genre: this.state.genre,
         authorId: this.state.authorId
-      }
+      },
+      refetchQueries: [{ query: getBooksQuery }]
     });
   }
 
